@@ -13,10 +13,6 @@ import { api } from "@/lib/api";
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [resetInfo, setResetInfo] = useState<{
-    uid?: string;
-    token?: string;
-  } | null>(null);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,7 +20,6 @@ export default function ForgotPasswordPage() {
     try {
       const { data } = await api.auth.forgotPassword({ email });
       toast.success(data.detail);
-      setResetInfo({ uid: data.uid, token: data.token });
     } catch (error) {
       const message =
         error instanceof Error
@@ -60,22 +55,6 @@ export default function ForgotPasswordPage() {
         <Button className="w-full" type="submit" disabled={submitting}>
           {submitting ? "Enviando..." : "Enviar link seguro"}
         </Button>
-        {resetInfo?.token && resetInfo?.uid ? (
-          <div className="space-y-1 rounded-2xl border border-dashed bg-muted/30 p-4 text-sm">
-            <p className="font-semibold text-foreground">Credenciais geradas</p>
-            <p>
-              UID: <code className="text-xs font-mono">{resetInfo.uid}</code>
-            </p>
-            <p>
-              Token:{" "}
-              <code className="text-xs font-mono">{resetInfo.token}</code>
-            </p>
-            <p className="mt-2 text-muted-foreground">
-              Em produção você receberia isso por email. Para testar localmente,
-              use esses dados na página de redefinição.
-            </p>
-          </div>
-        ) : null}
         <p className="text-center text-xs text-muted-foreground">
           Já lembrou?{" "}
           <Link href="/" className="text-primary">
