@@ -2,6 +2,8 @@
 
 import * as React from "react";
 
+import { Slot } from "@radix-ui/react-slot";
+
 import { cn } from "@/lib/utils";
 
 interface PopoverContextValue {
@@ -30,13 +32,16 @@ function Popover({ children }: { children: React.ReactNode }) {
 
 const PopoverTrigger = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentPropsWithoutRef<"button">
->(({ className, onClick, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"button"> & {
+    asChild?: boolean;
+  }
+>(({ className, onClick, children, asChild = false, ...props }, ref) => {
   const { open, setOpen } = usePopoverContext();
+  const Comp = asChild ? Slot : "button";
   return (
-    <button
-      type="button"
-      ref={ref}
+    <Comp
+      type={asChild ? undefined : "button"}
+      ref={asChild ? undefined : ref}
       className={className}
       onClick={(event) => {
         onClick?.(event);
@@ -45,7 +50,7 @@ const PopoverTrigger = React.forwardRef<
       {...props}
     >
       {children}
-    </button>
+    </Comp>
   );
 });
 PopoverTrigger.displayName = "PopoverTrigger";
