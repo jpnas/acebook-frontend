@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/auth-context";
 
-export default function PlayerLoginPage() {
+export default function AdminLoginPage() {
   const router = useRouter();
   const { login, user, isLoading } = useAuth();
   const [email, setEmail] = useState("");
@@ -42,19 +42,19 @@ export default function PlayerLoginPage() {
 
   return (
     <AuthCard
-      title="Bem-vindo"
-      description="Faça seu login para gerenciar suas reservas."
+      title="Bem-vindo, administrador"
+      description="Faça seu login e gerencie quadras, alunos e reservas."
       footer={
         <>
           <Link href="/forgot-password" className="text-primary mb-3">
             Esqueci minha senha
           </Link>
-          <Button asChild variant="outline" className="w-full mb-4">
-            <Link href="/register/player">Criar conta</Link>
+          <Button asChild variant="outline" className="w-full mb-4 ">
+            <Link href="/register/admin">Criar conta de administrador</Link>
           </Button>
           <p className="text-center text-xs text-muted-foreground">
-            <Link href="/admin_login" className="text-primary">
-              Sou administrador de clube
+            <Link href="/" className="text-primary">
+              Sou jogador
             </Link>
           </p>
         </>
@@ -62,21 +62,21 @@ export default function PlayerLoginPage() {
     >
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
-          <Label htmlFor="player-email">Email</Label>
+          <Label htmlFor="admin-email">Email corporativo</Label>
           <Input
-            id="player-email"
+            id="admin-email"
             name="email"
             type="text"
-            placeholder="jogador@acebook.club"
+            placeholder="admin@acebook.club"
             required
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
         </div>
         <div>
-          <Label htmlFor="player-password">Senha</Label>
+          <Label htmlFor="admin-password">Senha</Label>
           <Input
-            id="player-password"
+            id="admin-password"
             name="password"
             type="password"
             placeholder="********"
