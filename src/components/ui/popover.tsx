@@ -30,29 +30,31 @@ function Popover({ children }: { children: React.ReactNode }) {
   );
 }
 
-const PopoverTrigger = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentPropsWithoutRef<"button"> & {
+type PopoverTriggerProps = React.ComponentPropsWithoutRef<"button"> &
+  React.ComponentPropsWithoutRef<typeof Slot> & {
     asChild?: boolean;
-  }
->(({ className, onClick, children, asChild = false, ...props }, ref) => {
-  const { open, setOpen } = usePopoverContext();
-  const Comp = asChild ? Slot : "button";
-  return (
-    <Comp
-      type={asChild ? undefined : "button"}
-      ref={asChild ? undefined : ref}
-      className={className}
-      onClick={(event) => {
-        onClick?.(event);
-        setOpen(!open);
-      }}
-      {...props}
-    >
-      {children}
-    </Comp>
-  );
-});
+  };
+
+const PopoverTrigger = React.forwardRef<HTMLButtonElement, PopoverTriggerProps>(
+  ({ className, onClick, children, asChild = false, ...props }, ref) => {
+    const { open, setOpen } = usePopoverContext();
+    const Comp = asChild ? Slot : "button";
+    return (
+      <Comp
+        type={asChild ? undefined : "button"}
+        ref={ref}
+        className={className}
+        onClick={(event) => {
+          onClick?.(event);
+          setOpen(!open);
+        }}
+        {...props}
+      >
+        {children}
+      </Comp>
+    );
+  },
+);
 PopoverTrigger.displayName = "PopoverTrigger";
 
 const PopoverContent = React.forwardRef<
