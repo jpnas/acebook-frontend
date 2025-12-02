@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { endOfDay, format, startOfDay } from "date-fns";
+import { addDays, endOfDay, format, startOfDay } from "date-fns";
 import { toast } from "sonner";
+import { Plus } from "lucide-react";
 
 import { ReservationDialog } from "@/components/reservations/reservation-dialog";
 import {
@@ -54,9 +55,10 @@ export default function ReservationsPage() {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
   const today = startOfDay(new Date());
-  const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({
-    from: today,
-    to: today,
+  const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>(() => {
+    const from = today;
+    const to = addDays(from, 6);
+    return { from, to: endOfDay(to) };
   });
   const [allReservations, setAllReservations] = useState<Reservation[]>([]);
   const [courts, setCourts] = useState<Court[]>([]);
@@ -220,7 +222,10 @@ export default function ReservationsPage() {
               {filteredReservations.length} reserva(s) encontradas para o
               período selecionado.
             </p>
-            <Button onClick={handleOpenCreate}>Nova reserva</Button>
+            <Button onClick={handleOpenCreate}>
+              <Plus className="h-4 w-4" />
+              Nova reserva
+            </Button>
           </div>
           {loading ? (
             <div className="text-center text-sm text-muted-foreground">
@@ -289,6 +294,7 @@ export default function ReservationsPage() {
                 Ajuste o período acima ou crie uma nova reserva.
               </p>
               <Button className="mt-4" onClick={handleOpenCreate}>
+                <Plus className="h-4 w-4" />
                 Nova reserva
               </Button>
             </div>
