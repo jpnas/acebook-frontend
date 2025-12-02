@@ -11,6 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { api } from "@/lib/api";
 
+const PASSWORD_HINT = "Use pelo menos 8 caracteres combinando letras e números.";
+const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
+function isStrongPassword(password: string) {
+  return strongPasswordRegex.test(password);
+}
+
 type ResetSearchParams = Record<string, string | string[] | undefined>;
 
 type ResetPasswordPageProps = {
@@ -33,6 +40,10 @@ export default function ResetPasswordPage(props: ResetPasswordPageProps) {
     event.preventDefault();
     if (password !== confirmPassword) {
       toast.error("As senhas precisam coincidir.");
+      return;
+    }
+    if (!isStrongPassword(password)) {
+      toast.error(PASSWORD_HINT);
       return;
     }
     setSubmitting(true);
@@ -93,7 +104,7 @@ export default function ResetPasswordPage(props: ResetPasswordPageProps) {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <p className="text-xs text-muted-foreground">Use pelo menos 8 caracteres, misturando letras e números.</p>
+          <p className="text-xs text-muted-foreground">{PASSWORD_HINT}</p>
         </div>
         <div className="space-y-2">
           <Label htmlFor="confirm-password">Confirmar senha</Label>

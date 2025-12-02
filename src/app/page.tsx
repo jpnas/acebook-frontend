@@ -46,11 +46,14 @@ export default function UnifiedLoginPage() {
       description="Use seu email cadastrado para acessar o Acebook."
       footer={
         <>
-          <Button asChild variant="outline" className="w-full mb-2">
+          <Button asChild variant="outline" className="w-full mt-2 mb-2">
             <Link href="/register/player">Criar conta</Link>
           </Button>
           <p className="text-center text-xs text-muted-foreground">
-            <Link href="/register/admin" className="text-primary">
+            <Link
+              href="/register/admin"
+              className="text-primary hover:underline"
+            >
               Criar clube
             </Link>
           </p>
@@ -81,6 +84,12 @@ export default function UnifiedLoginPage() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          <Link
+            href="/forgot-password"
+            className="text-primary text-xs mt-1 block hover:underline"
+          >
+            Esqueci minha senha
+          </Link>
         </div>
         <Button className="w-full" type="submit" disabled={submitting}>
           {submitting ? "Entrando..." : "Entrar"}

@@ -11,6 +11,13 @@ import { api } from "@/lib/api";
 import type { ClubSlugAvailability } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
+const PASSWORD_HINT = "Use pelo menos 8 caracteres combinando letras e números.";
+const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
+function isStrongPassword(value: string) {
+  return strongPasswordRegex.test(value);
+}
+
 export default function AdminRegisterPage() {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -82,6 +89,10 @@ export default function AdminRegisterPage() {
     event.preventDefault();
     if (form.password !== form.confirmPassword) {
       toast.error("As senhas devem ser iguais.");
+      return;
+    }
+    if (!isStrongPassword(form.password)) {
+      toast.error(PASSWORD_HINT);
       return;
     }
     if (!form.clubCode.trim()) {
@@ -224,6 +235,7 @@ export default function AdminRegisterPage() {
             value={form.password}
             onChange={handleChange}
           />
+          <p className="mt-1 text-xs text-muted-foreground">{PASSWORD_HINT}</p>
         </div>
         <div>
           <Label htmlFor="admin-password-confirm">Confirmar senha</Label>

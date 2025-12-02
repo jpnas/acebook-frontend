@@ -10,6 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { api } from "@/lib/api";
 
+const PASSWORD_HINT =
+  "Use pelo menos 8 caracteres combinando letras e números.";
+const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
+function isStrongPassword(password: string) {
+  return strongPasswordRegex.test(password);
+}
+
 export default function PlayerRegisterPage() {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -30,6 +38,10 @@ export default function PlayerRegisterPage() {
     event.preventDefault();
     if (form.password !== form.confirmPassword) {
       toast.error("As senhas precisam ser iguais.");
+      return;
+    }
+    if (!isStrongPassword(form.password)) {
+      toast.error(PASSWORD_HINT);
       return;
     }
     setSubmitting(true);
@@ -107,6 +119,7 @@ export default function PlayerRegisterPage() {
             value={form.password}
             onChange={handleChange}
           />
+          <p className="mt-1 text-xs text-muted-foreground">{PASSWORD_HINT}</p>
         </div>
         <div>
           <Label htmlFor="player-password-confirm">Confirmar senha</Label>
@@ -114,6 +127,7 @@ export default function PlayerRegisterPage() {
             id="player-password-confirm"
             name="confirmPassword"
             type="password"
+            placeholder="********"
             required
             value={form.confirmPassword}
             onChange={handleChange}
