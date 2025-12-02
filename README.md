@@ -4,8 +4,7 @@
 
 - **Stack**: Next.js 16 (App Router) com TypeScript, Tailwind v4 e componentes do shadcn/ui.
 - **Rotas**:
-  - `/` portal do atleta (login direto para clientes).
-  - `/login` painel de administradores do clube.
+  - `/` login.
   - `/register/player` e `/register/admin` para criação de contas (cada uma com seu formulário).
   - `/forgot-password`, `/reset-password` para gerenciamento de senha.
   - `/dashboard/*` quadras, reservas, usuários.
@@ -29,7 +28,7 @@ npm run dev
 
 ## URL publicada
 
-`https://acebook-frontend-xi.vercel.app/`
+`https://acebook-app.vercel.app/`
 
 ## Relato do projeto
 
