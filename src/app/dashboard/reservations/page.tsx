@@ -51,6 +51,12 @@ interface ReservationPayload {
   player?: number;
 }
 
+const sortReservations = (list: Reservation[]) =>
+  [...list].sort(
+    (a, b) =>
+      new Date(a.start_time).getTime() - new Date(b.start_time).getTime()
+  );
+
 export default function ReservationsPage() {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
@@ -75,7 +81,7 @@ export default function ReservationsPage() {
       try {
         const [{ data: reservationData }, { data: courtsData }] =
           await Promise.all([api.reservations.list(), api.courts.list()]);
-        setAllReservations(reservationData);
+        setAllReservations(sortReservations(reservationData));
         setCourts(courtsData);
       } catch (error) {
         const message =
@@ -147,12 +153,14 @@ export default function ReservationsPage() {
         reservationData
       );
       setAllReservations((prev) =>
-        prev.map((item) => (item.id === data.id ? data : item))
+        sortReservations(
+          prev.map((item) => (item.id === data.id ? data : item))
+        )
       );
       return data;
     }
     const { data } = await api.reservations.create(reservationData);
-    setAllReservations((prev) => [data, ...prev]);
+    setAllReservations((prev) => sortReservations([...prev, data]));
     return data;
   }
 
