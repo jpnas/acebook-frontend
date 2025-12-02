@@ -108,7 +108,7 @@ export default function AdminRegisterPage() {
         club_slug: slugStatus.slug,
       });
       toast.success("Clube registrado! Faça login para configurar o painel.");
-      router.push("/admin_login");
+      router.push("/");
     } catch (error) {
       const message =
         error instanceof Error
@@ -159,7 +159,8 @@ export default function AdminRegisterPage() {
     <AuthCard
       title="Cadastrar clube"
       description="Gerencie quadras, alunos e reservas do seu clube."
-      backLink={{ href: "/admin_login", label: "Voltar" }}
+      backLink={{ href: "/", label: "Voltar" }}
+      hasHeader={false}
     >
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>

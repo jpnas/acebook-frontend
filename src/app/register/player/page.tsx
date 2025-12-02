@@ -59,6 +59,7 @@ export default function PlayerRegisterPage() {
       title="Crie sua conta"
       description="Conecte-se às quadras e instrutores do seu clube."
       backLink={{ href: "/", label: "Voltar" }}
+      hasHeader={false}
     >
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>

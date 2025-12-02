@@ -22,6 +22,7 @@ interface AuthCardProps {
     href: string;
     label?: string;
   };
+  hasHeader?: boolean;
 }
 
 export function AuthCard({
@@ -30,6 +31,7 @@ export function AuthCard({
   children,
   footer,
   backLink,
+  hasHeader = true,
 }: AuthCardProps) {
   return (
     <div className="dark flex min-h-screen items-center justify-center bg-background px-4 py-10 text-foreground">
@@ -49,12 +51,14 @@ export function AuthCard({
             </Button>
           </div>
         ) : null}
-        <div className="flex items-center justify-center border-border/50 px-6 py-4">
-          <Eclipse className="size-5" />
-          <p className="text-md font-semibold uppercase tracking-[0.3em] ml-3">
-            AceBook
-          </p>
-        </div>
+        {hasHeader ? (
+          <div className="flex items-center justify-center border-border/50 px-6 py-4">
+            <Eclipse className="size-5" />
+            <p className="text-md font-semibold uppercase tracking-[0.3em] ml-3">
+              AceBook
+            </p>
+          </div>
+        ) : null}
         <CardHeader>
           <CardTitle className="text-2xl font-semibold">{title}</CardTitle>
           <CardDescription className="text-base text-muted-foreground">

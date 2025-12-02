@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/auth-context";
 
-export default function PlayerLoginPage() {
+export default function UnifiedLoginPage() {
   const router = useRouter();
   const { login, user, isLoading } = useAuth();
   const [email, setEmail] = useState("");
@@ -43,18 +43,15 @@ export default function PlayerLoginPage() {
   return (
     <AuthCard
       title="Bem-vindo"
-      description="Faça seu login para gerenciar suas reservas."
+      description="Use seu email cadastrado para acessar o Acebook."
       footer={
         <>
-          <Link href="/forgot-password" className="text-primary mb-3">
-            Esqueci minha senha
-          </Link>
-          <Button asChild variant="outline" className="w-full mb-4">
+          <Button asChild variant="outline" className="w-full mb-2">
             <Link href="/register/player">Criar conta</Link>
           </Button>
           <p className="text-center text-xs text-muted-foreground">
-            <Link href="/admin_login" className="text-primary">
-              Sou administrador de clube
+            <Link href="/register/admin" className="text-primary">
+              Criar clube
             </Link>
           </p>
         </>
