@@ -49,12 +49,11 @@ O Acebook é um sistema de reservas de quadras feito para conectar atletas, inst
 ## Manual do usuário
 
 1. **Primeiro acesso**: abra `http://localhost:3000`. A tela inicial apresenta botões para login ou cadastro.
-2. **Cadastro de jogador**: acesse `/register/player`, preencha dados pessoais e confirme. Mensagens de erro aparecem ao lado de cada campo obrigatório. Se ainda não possuir um código de clube, utilize `test-club`.
-3. **Cadastro de administrador**: use `/register/admin` para informar dados do clube e credenciais que darão acesso ao painel.
-4. **Login**: administradores entram por `/login`; atletas podem usar o portal inicial. Após autenticar, o sistema mantém a sessão e direciona para o dashboard.
-5. **Uso do dashboard**: -[USER] Visualizar reservas, quadras, ou instrutores. -[ADMIN] Além de visualizar, pode editar ou apagar qualquer informação.
-6. **Configuração da API**: defina `NEXT_PUBLIC_API_BASE_URL` em `.env.local` para apontar para o backend. Se a API estiver indisponível, ativar `NEXT_PUBLIC_USE_MOCK_API=true` força o modo mock.
-7. **Regras das reservas**: Reservas só podem ser feitas no mesmo dia em que se deseja jogar (administradores não têm restrição de data na reserva).
+2. **Cadastro de clube**: use `/register/admin` e informe os dados do clube.
+3. **Cadastro de jogador**: acesse `/register/player`, e preencha os dados pessoais. Se ainda não possuir um código de clube, crie um clube antes.
+4. **Login**: Insira seu login e senha.
+5. **Uso do dashboard**: Use os cards do dashboard ou o menu de navegação para acessar a página desejada.
+6. **Regras das reservas**: Reservas só podem ser feitas no mesmo dia em que se deseja jogar (administradores não têm restrição de data na reserva).
 
 ## Capturas de tela
 
