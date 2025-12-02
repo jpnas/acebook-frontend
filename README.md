@@ -1,19 +1,23 @@
 # AceBook Frontend
 
-Frontend em Next.js + TypeScript para o sistema de reservas de quadras de tênis desenvolvido na disciplina de Programação para Web. O projeto replica o mesmo domínio do primeiro trabalho (gestão de quadras de tênis), mas agora com foco em uma experiência completa separada do backend em Django.
-
-## Principais decisões
+## Overview
 
 - **Stack**: Next.js 16 (App Router) com TypeScript, Tailwind v4 e componentes do shadcn/ui.
-- **Design system**: paleta inspirada em quadras de tênis, layouts responsivos e componentes reutilizáveis em `src/components`.
 - **Rotas**:
   - `/` portal do atleta (login direto para clientes).
   - `/login` painel de administradores do clube.
   - `/register/player` e `/register/admin` para criação de contas (cada uma com seu formulário).
   - `/forgot-password`, `/reset-password` para gerenciamento de senha.
-  - `/dashboard/*` (overview, quadras, reservas, usuários, configurações) com layout próprio.
+  - `/dashboard/*` quadras, reservas, usuários.
 - **Mock data**: `src/lib/mock-data.ts` fornece dados temporários até a integração com o backend.
 - **Contratos de API**: definidos em `src/lib/api.ts` apontando para `http://localhost:8000/api` (pode ser sobrescrito via `NEXT_PUBLIC_API_BASE_URL`).
+
+## Requisitos
+
+- Node.js 20.x (necessário para Next.js 16 + React 19).
+- npm 10.x ou superior (ou outro gerenciador compatível como pnpm).
+- Backend Django acessível em `http://localhost:8000/api` ou outra URL configurada via `NEXT_PUBLIC_API_BASE_URL`.
+- Arquivo `.env.local` com a variável `NEXT_PUBLIC_API_BASE_URL`.
 
 ## Como rodar
 
@@ -23,57 +27,40 @@ npm run dev
 # abra http://localhost:3000
 ```
 
-Variáveis úteis:
+## Relato do projeto
 
-- `NEXT_PUBLIC_API_BASE_URL`: URL base do backend Django publicado.
-- `NEXT_PUBLIC_USE_MOCK_API=true`: força o modo mock, útil enquanto a API não estiver acessível.
+O Acebook é um sistema de reservas de quadras feito para conectar atletas, instrutores e administradores de clubes.
 
-## Integração prevista com o backend
+### Escopo desenvolvido
 
-Endpoints esperados (seguindo o enunciado e prontos para documentação em Swagger no backend):
+- Landing page com direcionamento para atletas e administradores.
+- Fluxos de cadastro separados (`/register/player` e `/register/admin`).
+- Login de administradores e jogadores compartilhando o mesmo contexto de autenticação (`useAuth`).
+- Reserva de quadras com formulário intuitivo.
+- Listagem das quadras com suas características e horário de funcionamento.
+- Página de contatos dos instrutores do clube.
+- [Admin] Gerenciamento de quadras, reservas, usuários e instrutores.
+- Integração preparada com o backend Django via `src/lib/api.ts`.
 
-| Domínio        | Método | Endpoint                         | Descrição                                     |
-| -------------- | ------ | -------------------------------- | --------------------------------------------- |
-| Autenticação   | POST   | `/auth/login/`                   | Login e retorno de tokens JWT.                |
-| Autenticação   | POST   | `/auth/register/`                | Cadastro de usuário/academia.                 |
-| Autenticação   | POST   | `/auth/password/forgot/`         | Solicitação de redefinição de senha.          |
-| Autenticação   | POST   | `/auth/password/reset/`          | Aplicação do token de redefinição.            |
-| Quadras        | GET    | `/courts/`                       | Listagem com filtros.                         |
-| Quadras        | POST   | `/courts/`                       | Criação de quadra (restrito/admin).          |
-| Quadras        | PATCH  | `/courts/<id>/`                  | Atualização parcial.                          |
-| Quadras        | DELETE | `/courts/<id>/`                  | Exclusão (se não houver reservas ativas).     |
-| Reservas       | GET    | `/reservations/`                 | Listagem e busca.                             |
-| Reservas       | POST   | `/reservations/`                 | Criação de reserva (usuário autenticado).     |
-| Reservas       | PATCH  | `/reservations/<id>/`            | Reprogramar/cancelar.                         |
-| Usuários       | GET    | `/users/`                        | Lista de jogadores do clube (visão filtrada). |
-| Usuários       | PATCH  | `/users/<id>/`                   | Atualização de perfis/planos.                 |
-| Coaches        | GET    | `/coaches/`                      | Listagem de instrutores (admin).              |
-| Coaches        | POST   | `/coaches/`                      | Cadastro de coach.                            |
-| Coaches        | PATCH  | `/coaches/<id>/`                 | Atualização de coach.                         |
-| Coaches        | DELETE | `/coaches/<id>/`                 | Remoção do coach.                             |
+## Manual do usuário
 
-Todos os métodos que alteram dados serão protegidos via JWT e com grupos de permissão distintos para `player` e `admin`. A gestão de coaches acontece via o novo CRUD dedicado, apenas para administradores. O frontend já prepara o header `Authorization` em `src/lib/api.ts` e trata respostas `JSON` padrão.
+1. **Primeiro acesso**: abra `http://localhost:3000`. A tela inicial apresenta botões para login ou cadastro.
+2. **Cadastro de jogador**: acesse `/register/player`, preencha dados pessoais e confirme. Mensagens de erro aparecem ao lado de cada campo obrigatório. Se ainda não possuir um código de clube, utilize `test-club`.
+3. **Cadastro de administrador**: use `/register/admin` para informar dados do clube e credenciais que darão acesso ao painel.
+4. **Login**: administradores entram por `/login`; atletas podem usar o portal inicial. Após autenticar, o sistema mantém a sessão e direciona para o dashboard.
+5. **Uso do dashboard**:
+   - Jogadores visualizam quadras disponíveis com status, horários e características (coberta/iluminação).
+   - Administradores enxergam botões extras (novo, editar, excluir) e podem abrir o modal para gerenciar quadras.
+6. **Configuração da API**: defina `NEXT_PUBLIC_API_BASE_URL` em `.env.local` para apontar para o backend. Se a API estiver indisponível, ativar `NEXT_PUBLIC_USE_MOCK_API=true` força o modo mock.
+7. **Regras das reservas**: Reservas só podem ser feitas no mesmo dia em que se deseja jogar (administradores não têm restrição de data na reserva).
 
-## Próximos passos
+## Status dos testes
 
-1. Ajustar o resumo do pré-projeto e enviar ao professor para validação do escopo.
-2. Subir o backend em Django com os endpoints descritos e habilitar Swagger.
-3. Conectar as chamadas reais no frontend (substituindo os dados mock) e publicar o app.
+- **Funcionou**:
+  Login de administrador/jogador, cadastros de usuário, visualização de quadras no dashboard e CRUD de reservas, quadras, instrutores e usuários.
+  Alterações no horário ou status (disponível/manutenção) da quadra refletem corretamente no fluxo de reserva de quadra.
 
-## Scripts disponíveis
+- **Não funcionou**:
+  Fluxo de recuperação de senha (`/forgot-password` e `/reset-password`) persiste dando Internal Server Error.
 
-- `npm run dev`: ambiente de desenvolvimento com hot reload.
-- `npm run build`: build de produção otimizado.
-- `npm run start`: serve o build produzido.
-- `npm run lint`: validação com ESLint.
-
-## Estrutura
-
-```
-src/
-  app/                 # Rotas do Next.js
-  components/          # shadcn/ui + componentes de layout/dashboard
-  lib/                 # Tipos, mocks, rotas e cliente de API
-```
-
-As imagens solicitadas e instruções detalhadas de deploy serão adicionadas após o desenvolvimento completo e publicação.
+João Pedro Bonato - 2210028
