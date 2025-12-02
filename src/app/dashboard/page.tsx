@@ -16,14 +16,15 @@ import { useAuth } from "@/context/auth-context";
 const shortcuts = [
   {
     title: "Reservas",
-    description: "Veja suas partidas confirmadas e histórico completo.",
+    description: "Faça suas reservas e veja seu histórico completo.",
     href: "/dashboard/reservations",
     icon: CalendarDays,
     cta: "Abrir reservas",
   },
   {
     title: "Quadras",
-    description: "Consulte disponibilidade e infraestrutura antes de reservar.",
+    description:
+      "Consulte o tipo de piso e o horário de funcionamento antes de reservar.",
     href: "/dashboard/courts",
     icon: ClipboardCheck,
     cta: "Ver quadras",
@@ -86,21 +87,21 @@ function AdminDashboard() {
   const shortcuts = [
     {
       title: "Reservas",
-      description: "Gerencie a agenda de quadras e confirme cancelamentos.",
+      description: "Gerencie a agenda de reservas.",
       href: "/dashboard/reservations",
       cta: "Abrir reservas",
     },
     {
       title: "Quadras",
-      description: "Atualize disponibilidade, manutenção e valores por hora.",
+      description: "Atualize informações sobre as quadras.",
       href: "/dashboard/courts",
       cta: "Configurar quadras",
     },
     {
       title: "Jogadores",
-      description: "Convide atletas, acompanhe planos e comunicação.",
+      description: "Gerencie os jogadores do clube.",
       href: "/dashboard/users",
-      cta: "Gerenciar atletas",
+      cta: "Gerenciar jogadores",
     },
   ];
 

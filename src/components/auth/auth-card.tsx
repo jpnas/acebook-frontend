@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
-
 import {
   Card,
   CardContent,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-import { ArrowLeft, Eclipse } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 interface AuthCardProps {
   title: string;
@@ -52,8 +52,8 @@ export function AuthCard({
           </div>
         ) : null}
         {hasHeader ? (
-          <div className="flex items-center justify-center border-border/50 px-6 py-4">
-            <Eclipse className="size-5" />
+          <div className="flex items-center justify-center border-border/50 px-6 py-4 text-white">
+            <Image src="/logo-white.svg" alt="Acebook" width={22} height={22} />
             <p className="text-md font-semibold uppercase tracking-[0.3em] ml-3">
               AceBook
             </p>

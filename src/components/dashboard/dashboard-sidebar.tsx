@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Eclipse } from "lucide-react";
+import Image from "next/image";
 
 import { useAuth } from "@/context/auth-context";
 import { adminNavigation, playerNavigation } from "@/lib/routes";
@@ -33,11 +33,11 @@ export function DashboardSidebar({
         )}
       >
         <div className="rounded-full bg-primary/10 p-2 text-primary">
-          <Eclipse className="size-6" />
+          <Image src="/logo.svg" alt="Acebook" width={23} height={23} />
         </div>
         <div>
           <p className="text-sm uppercase tracking-wide text-muted-foreground">
-            AceBook
+            Acebook
           </p>
           <p className="font-semibold text-sm text-foreground">
             {user?.club?.name ?? "Seu clube"}
