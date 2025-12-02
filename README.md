@@ -27,6 +27,10 @@ npm run dev
 # abra http://localhost:3000
 ```
 
+## URL publicada
+
+`https://acebook-frontend-xi.vercel.app/`
+
 ## Relato do projeto
 
 O Acebook é um sistema de reservas de quadras feito para conectar atletas, instrutores e administradores de clubes.
@@ -48,13 +52,17 @@ O Acebook é um sistema de reservas de quadras feito para conectar atletas, inst
 2. **Cadastro de jogador**: acesse `/register/player`, preencha dados pessoais e confirme. Mensagens de erro aparecem ao lado de cada campo obrigatório. Se ainda não possuir um código de clube, utilize `test-club`.
 3. **Cadastro de administrador**: use `/register/admin` para informar dados do clube e credenciais que darão acesso ao painel.
 4. **Login**: administradores entram por `/login`; atletas podem usar o portal inicial. Após autenticar, o sistema mantém a sessão e direciona para o dashboard.
-5. **Uso do dashboard**:
-   - Jogadores visualizam quadras disponíveis com status, horários e características (coberta/iluminação).
-   - Administradores enxergam botões extras (novo, editar, excluir) e podem abrir o modal para gerenciar quadras.
+5. **Uso do dashboard**: -[USER] Visualizar reservas, quadras, ou instrutores. -[ADMIN] Além de visualizar, pode editar ou apagar qualquer informação.
 6. **Configuração da API**: defina `NEXT_PUBLIC_API_BASE_URL` em `.env.local` para apontar para o backend. Se a API estiver indisponível, ativar `NEXT_PUBLIC_USE_MOCK_API=true` força o modo mock.
 7. **Regras das reservas**: Reservas só podem ser feitas no mesmo dia em que se deseja jogar (administradores não têm restrição de data na reserva).
 
-## Status dos testes
+## Capturas de tela
+
+![Tela de login](public/images/print-login.png)
+![Página de reservas](public/images/print-reservations.png)
+![Listagem de quadras](public/images/print-courts.png)
+
+## Resultados
 
 - **Funcionou**:
   Login de administrador/jogador, cadastros de usuário, visualização de quadras no dashboard e CRUD de reservas, quadras, instrutores e usuários.
